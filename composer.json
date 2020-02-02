@@ -1,0 +1,42 @@
+{
+    "name": "uccello/comment",
+    "description": "Add comment widget to Uccello entities.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dimitri DA COSTA",
+            "email": "dimitri.dacosta34@gmail.com"
+        },
+        {
+            "name": "Jérôme SAVIN",
+            "email": "jsavin@jsdev.fr"
+        },
+        {
+            "name": "Jonathan SARDO",
+            "email": "jonathan@uccellolabs.com"
+        }
+    ],
+    "require": {
+        "uccello/uccello": "1.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Uccello\\Comment\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Uccello\\Comment\\Providers\\AppServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
