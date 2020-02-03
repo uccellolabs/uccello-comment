@@ -59,6 +59,8 @@ export class Comment {
                     id: id,
                 }
             }).then((response) => {
+                $(".uc-comments #uc-content").val("");
+                $(".uc-comments #uc-content").trigger('autoresize'); // TODO: Not working =/
                 location.reload();
             }).fail((error) => {
                 swal(uctrans.trans('uccello::default.dialog.error.title'), uctrans.trans('uccello::settings.menu_manager.error.save'), "error")

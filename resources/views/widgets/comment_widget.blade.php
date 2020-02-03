@@ -1,6 +1,9 @@
 <div class="card">
     <div class="card-content">
-        <span class="card-title">{!! $config['data']->title ?? uctrans('comment', $mComment) !!}</span>
+        <span class="card-title">
+            <i class="material-icons left primary-text">speaker_notes</i>
+            {!! $config['data']->title ?? uctrans('comment', $mComment) !!}
+        </span>
 
         <div class="uc-comments">
             <div class="uc-header row">
@@ -46,7 +49,13 @@
                     <div class="uc-main col">
                         <div class="uc-comment-header row{{$comment->deleted_at ? ' uc-deleted' : ''}}">
                             <div class="col uc-user">
+                                @if(auth()->user()->canRetrieve($domain, auth()->user()->module))
+                                <a href="{{ucroute('uccello.detail', $domain, 'user', [ 'id' => $comment->user->id ])}}" class="primary-text">
+                                    {{ $comment->user->recordLabel }}
+                                </a>
+                                @else
                                 {{ $comment->user->recordLabel }}
+                                @endif
                             </div>
                             <div class="col">
                                 {{ (new \Carbon\Carbon($comment->created_at))->format(config('uccello.format.php.datetime')) }} 
@@ -80,9 +89,7 @@
                                     data-tooltip="{{ uctrans('button.delete', $mComment) }}" 
                                     data-position="top" 
                                     data-comment-id={{ $comment->id }}
-                                    class="delete-btn primary-text" 
-                                    {{-- data-config='{"actionType":"link","confirm":true,"dialog":{"title":"{{ uctrans('confirm.button.delete_record', $module) }}"}}' --}}
-                                    >
+                                    class="delete-btn primary-text">
                                     <i class="material-icons">delete</i>
                                 </a>
                                 @endif
@@ -102,10 +109,12 @@
                         @if($comment->replies->count())
                         <a class="uc-toggle-reply btn-flat" data-comment-id={{ $comment->id }} 
                             @if(!config('uccello.comment.show_child', true))style="display:none"@endif>
-                            ▴ {{ uctrans('msg.hide', $mComment) }} {{$comment->replies->count()}} {{ uctrans('msg.replies', $mComment) }}</a>
+                            ▴ {{ uctrans('msg.count.hide', $mComment) }} {{$comment->replies->count()}}
+                            {{ $comment->replies->count() > 1 ? uctrans('msg.count.replies', $mComment) : uctrans('msg.count.reply', $mComment) }}</a>
                         <a class="uc-toggle-reply btn-flat" data-comment-id={{ $comment->id }} 
                             @if(config('uccello.comment.show_child', true))style="display:none"@endif>
-                            ▾ {{ uctrans('msg.show', $mComment) }} {{$comment->replies->count()}} {{ uctrans('msg.replies', $mComment) }}</a>
+                            ▾ {{ uctrans('msg.count.show', $mComment) }} {{$comment->replies->count()}}
+                            {{ $comment->replies->count() > 1 ? uctrans('msg.count.replies', $mComment) : uctrans('msg.count.reply', $mComment) }}</a>
                         <div class="uc-reply uc-toggle-reply" @if(!config('uccello.comment.show_child', true))style="display:none"@endif>
                             @foreach($comment->replies as $reply)
                             <div class="uc-comment row" id="uc-comment-{{ $reply->id }}" style="margin-bottom: 20px">
@@ -119,7 +128,13 @@
                                 <div class="uc-main col">
                                     <div class="uc-comment-header row">
                                         <div class="col uc-user">
+                                            @if(auth()->user()->canRetrieve($domain, auth()->user()->module))
+                                            <a href="{{ucroute('uccello.detail', $domain, 'user', [ 'id' => $reply->user->id ])}}" class="primary-text">
+                                                {{ $reply->user->recordLabel }}
+                                            </a>
+                                            @else
                                             {{ $reply->user->recordLabel }}
+                                            @endif
                                         </div>
                                         <div class="col">
                                             {{ (new \Carbon\Carbon($reply->created_at))->format(config('uccello.format.php.datetime')) }} 
@@ -143,9 +158,7 @@
                                                 data-tooltip="{{ uctrans('button.delete', $mComment) }}" 
                                                 data-position="top" 
                                                 data-comment-id={{ $reply->id }}
-                                                class="delete-btn primary-text" 
-                                                {{-- data-config='{"actionType":"link","confirm":true,"dialog":{"title":"{{ uctrans('confirm.button.delete_record', $module) }}"}}' --}}
-                                                >
+                                                class="delete-btn primary-text">
                                                 <i class="material-icons">delete</i>
                                             </a>
                                             @endif
@@ -190,6 +203,9 @@
 }
 .uc-comments a i {
     font-size: 18px;
+}
+.uc-comments .uc-comment {
+    width: 100%;
 }
 .uc-comments .uc-content {
     overflow-y: auto;

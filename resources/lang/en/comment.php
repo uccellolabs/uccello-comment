@@ -33,10 +33,13 @@ return [
         'send' => 'Send',
     ],
     'msg' => [
+        'count' => [
+            'hide' => 'HIDE',
+            'show' => 'SHOW',
+            'reply' => 'REPLY',
+            'replies' => 'REPLIES',
+        ],
         'modified' => 'Modified',
-        'hide' => 'HIDE',
-        'show' => 'SHOW',
-        'replies' => 'REPLIES',
         'deleted' => 'Comment deleted',
         'new' => 'Your new comment',
         'edit' => 'Edit your comment',
