@@ -1,5 +1,6 @@
 export class Comment {
     constructor() {
+        this.isSent = false;
         this.initListeners();
     }
 
@@ -25,7 +26,8 @@ export class Comment {
         let id      = $("meta[name='comment-id']").attr('content');
         let content = $(".uc-comments #uc-content").val();
 
-        if (content != null && content != '') {
+        if (content != null && content != '' && !this.isSent) {
+            this.isSent = true;
             $.ajax({
                 url: url,
                 method: "post",
@@ -37,6 +39,8 @@ export class Comment {
                     content: content,
                 }
             }).then((response) => {
+                $(".uc-comments #uc-content").val("");
+                $(".uc-comments #uc-content").trigger('autoresize'); // TODO: Not working =/
                 location.reload();
             }).fail((error) => {
                 swal(uctrans.trans('uccello::default.dialog.error.title'), uctrans.trans('uccello::settings.menu_manager.error.save'), "error")
@@ -59,8 +63,6 @@ export class Comment {
                     id: id,
                 }
             }).then((response) => {
-                $(".uc-comments #uc-content").val("");
-                $(".uc-comments #uc-content").trigger('autoresize'); // TODO: Not working =/
                 location.reload();
             }).fail((error) => {
                 swal(uctrans.trans('uccello::default.dialog.error.title'), uctrans.trans('uccello::settings.menu_manager.error.save'), "error")
@@ -127,8 +129,6 @@ export class Comment {
             var commentId = $(event.currentTarget).data('commentId');
             var content = $("#uc-comment-" + commentId + " .uc-comment-content").first().text().trim();
 
-            console.log(content);
-            
             $("meta[name='comment-id']").attr('content', commentId);
             $(".uc-comments #uc-content").val(content);
             $(".uc-comments #uc-content").trigger('autoresize'); // TODO: Not working =/

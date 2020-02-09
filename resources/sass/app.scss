@@ -1,0 +1,47 @@
+.uc-comments .row {
+    margin-bottom: 0;
+}
+.uc-comments .uc-user {
+    font-weight: bold;
+}
+.uc-comments a i {
+    font-size: 18px;
+}
+.uc-comments .uc-comment {
+    width: 100%;
+}
+.uc-comments .uc-content {
+    overflow-y: auto;
+    padding-top: 20px;
+}
+.uc-comments .uc-main {
+    max-width: calc(100% - 68px);
+}
+.uc-comments .uc-comment-header {
+    width: max-content;
+}
+.uc-comments .uc-header .input-field {
+    margin: 0px;
+    width: calc(100% - 130px);
+    max-width: 400px;
+}
+.uc-comments .uc-comment-header {
+    width: max-content;
+}
+.uc-comments .uc-header .clear-btn {
+    bottom: 20px;
+    right: 10px;
+    position: absolute;
+}
+.uc-comments .uc-deleted {
+    color: grey;
+    font-style: italic;
+}
+.uc-comments .user-image img{
+    width: 42px;
+    height: 42px;
+}
+.uc-comments .uc-date {
+    color: #9e9e9e;
+    font-size: 0.9rem
+}

@@ -27,7 +27,7 @@
                         data-tooltip="{{ uctrans('button.clear', $mComment) }}" 
                         data-position="bottom" 
                         class="clear-btn primary-text">
-                        <i class="material-icons">delete</i>
+                        <i class="material-icons">cancel</i>
                     </a>
                 </div>
                 <button class="save-btn btn-floating waves-effect waves-light primary"
@@ -57,7 +57,7 @@
                                 {{ $comment->user->recordLabel }}
                                 @endif
                             </div>
-                            <div class="col">
+                            <div class="col uc-date">
                                 {{ (new \Carbon\Carbon($comment->created_at))->format(config('uccello.format.php.datetime')) }} 
                             </div>
                             @if (!$comment->deleted_at && $comment->updated_at != $comment->created_at)
@@ -136,7 +136,7 @@
                                             {{ $reply->user->recordLabel }}
                                             @endif
                                         </div>
-                                        <div class="col">
+                                        <div class="col uc-date">
                                             {{ (new \Carbon\Carbon($reply->created_at))->format(config('uccello.format.php.datetime')) }} 
                                         </div>
                                         @if ($reply->updated_at != $reply->created_at)
@@ -193,48 +193,13 @@
 
 @section('extra-script')
 {!! Html::script(mix('js/comment.js', 'vendor/uccello/comment')) !!}
+@append
 
+@section('extra-css')
+{!! Html::style(mix('css/app.css', 'vendor/uccello/comment')) !!}
 <style>
-.uc-comments .row {
-    margin-bottom: 0;
-}
-.uc-comments .uc-user {
-    font-weight: bold;
-}
-.uc-comments a i {
-    font-size: 18px;
-}
-.uc-comments .uc-comment {
-    width: 100%;
-}
 .uc-comments .uc-content {
-    overflow-y: auto;
     max-height: {{config('uccello.comment.max_height', 450)}}px;
-    padding-top: 20px;
-}
-.uc-comments .uc-main {
-    max-width: calc(100% - 68px);
-}
-.uc-comments .uc-comment-header {
-    width: max-content;
-}
-.uc-comments .uc-header .input-field {
-    margin: 0px;
-    width: calc(100% - 130px);
-    max-width: 400px;
-}
-.uc-comments .uc-comment-header {
-    width: max-content;
-}
-.uc-comments .uc-header .clear-btn {
-    bottom: 20px;
-    right: 10px;
-    position: absolute;
-}
-.uc-comments .uc-deleted {
-    color: grey;
-    font-style: italic;
 }
 </style>
-
 @append
