@@ -98,9 +98,10 @@ class Comment extends Model implements Searchable
     {
         if(!$this->repliesCache)
         {
+            $order = config('uccello.comment.order_desc', true) ? 'desc' : 'asc';
+
             $query = static::where('parent_id', $this->id)
-                            // ->InDomain($domain)
-                            ->orderby('created_at', 'desc');
+                            ->orderby('created_at', $order);
     
             if(config('uccello.comment.can_delete_parent', false))
             {
@@ -113,12 +114,13 @@ class Comment extends Model implements Searchable
         return $this->repliesCache;
     }
     
-    public static function getAll($entity, $domain)
+    public static function getAll($entity)
     {
+        $order = config('uccello.comment.order_desc', true) ? 'desc' : 'asc';
+
         $query = static::where('entity_id', $entity->uuid)
-                        // ->InDomain($domain)
                         ->whereNull('parent_id')
-                        ->orderby('created_at', 'desc');
+                        ->orderby('created_at', $order);
 
         if(config('uccello.comment.can_delete_parent', false))
         {

@@ -38,7 +38,6 @@ class CommentController extends Controller
         $comment->user_id   = auth()->user()->id;
         $comment->entity_id = $request->entity;
         $comment->content   = $request->content;
-        // $comment->domain    = $domain;           // TODO: Domain ??
 
         $comment->save();
 

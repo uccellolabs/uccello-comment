@@ -38,5 +38,6 @@ You can add the folowing optional setings to your uccello.php config file:
         'show_child' => true,
         'can_edit_parent' => true,
         'can_delete_parent' => false,
+        'order_desc' => true,
 ]
 ```

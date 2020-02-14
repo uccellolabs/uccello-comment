@@ -38,7 +38,7 @@
                         </button>
                     </div>
                     <div class="uc-content">
-                        @foreach(Uccello\Comment\Models\Comment::getAll($record, $domain) as $comment)
+                        @foreach(Uccello\Comment\Models\Comment::getAll($record) as $comment)
                         @if(!$comment->deleted_at || $comment->replies->count())
                         <div class="uc-comment row" id="uc-comment-{{ $comment->id }}" style="margin-bottom: 20px">
                             <div class="user-image col">
@@ -63,7 +63,7 @@
                                         {{ (new \Carbon\Carbon($comment->created_at))->format(config('uccello.format.php.datetime')) }} 
                                     </div>
                                     @if (!$comment->deleted_at && $comment->updated_at != $comment->created_at)
-                                    <div class="col">
+                                    <div class="col uc-msg">
                                         ({{ uctrans('msg.modified', $mComment) }})
                                     </div>
                                     @endif
@@ -142,7 +142,7 @@
                                                     {{ (new \Carbon\Carbon($reply->created_at))->format(config('uccello.format.php.datetime')) }} 
                                                 </div>
                                                 @if ($reply->updated_at != $reply->created_at)
-                                                <div class="col">
+                                                <div class="col uc-msg">
                                                     ({{ uctrans('msg.modified', $mComment) }})
                                                 </div>
                                                 @endif
