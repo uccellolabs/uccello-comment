@@ -34,8 +34,6 @@ class Comment extends Model implements Searchable
 
     public $searchableColumns = [
         'content',
-        'entity',
-        'user',
     ];
 
     public function getSearchResult(): SearchResult
