@@ -60,14 +60,14 @@ class CreateCommentModule extends Migration
         Schema::create($this->tablePrefix . 'comments', function (Blueprint $table) {
             $table->increments('id');
             $table->text('content');
-            $table->string('entity_id')->nullable();
+            $table->string('entity_id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('parent_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('entity_id')->references('id')->on(env('UCCELLO_TABLE_PREFIX', 'uccello_') . 'entities');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('entity_id')->references('id')->on(env('UCCELLO_TABLE_PREFIX', 'uccello_') . 'entities')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('parent_id')->references('id')->on(env('UCCELLO_TABLE_PREFIX', 'uccello_') . 'comments');
         });
     }
