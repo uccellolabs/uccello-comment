@@ -76,7 +76,7 @@ class Comment extends Model implements Searchable
      */
     public function parent()
     {
-        return $this->belongsTo('Uccello\Comment\Models\Comment');
+        return $this->belongsTo('Uccello\Comment\Models\Comment')->withTrashed();
     }
 
     /**
@@ -84,7 +84,7 @@ class Comment extends Model implements Searchable
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->withTrashed();
     }
 
     protected $repliesCache = null;
@@ -94,15 +94,13 @@ class Comment extends Model implements Searchable
      */
     public function getRepliesAttribute()
     {
-        if(!$this->repliesCache)
-        {
+        if (!$this->repliesCache) {
             $order = config('uccello.comment.order_desc', true) ? 'desc' : 'asc';
 
             $query = static::where('parent_id', $this->id)
                             ->orderby('created_at', $order);
-    
-            if(config('uccello.comment.can_delete_parent', false))
-            {
+
+            if (config('uccello.comment.can_delete_parent', false)) {
                 $query = $query->withTrashed();
             }
 
@@ -111,7 +109,7 @@ class Comment extends Model implements Searchable
 
         return $this->repliesCache;
     }
-    
+
     public static function getAll($entity)
     {
         $order = config('uccello.comment.order_desc', true) ? 'desc' : 'asc';
@@ -120,8 +118,7 @@ class Comment extends Model implements Searchable
                         ->whereNull('parent_id')
                         ->orderby('created_at', $order);
 
-        if(config('uccello.comment.can_delete_parent', false))
-        {
+        if (config('uccello.comment.can_delete_parent', false)) {
             $query = $query->withTrashed();
         }
 
